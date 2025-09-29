@@ -1,0 +1,2 @@
+﻿Model,Accuracy,AUC,Recall,Prec.,F1,Kappa,MCC
+Extreme Gradient Boosting,1.0,1.0,1.0,1.0,1.0,1.0,1.0
