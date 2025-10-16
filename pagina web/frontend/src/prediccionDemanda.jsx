@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 
 const TEMPORADAS = [
   "Semana Santa","Navidad","Año Nuevo","Aguinaldo Boyacense",
-  "Vacaciones mitad de año","Vacaciones fin de año","Puente festivo"
+  "Vacaciones mitad de año","Vacaciones fin de año"," Fiestas locales de Tunja"
 ];
 const SEGMENTOS = ["económico","precio-calidad","premium"];
 const TIPOS = ["Solo","Pareja","Familia","Grupo"];
@@ -30,7 +30,7 @@ function defaultsByTemporada(t) {
 }
 
 export default function PrediccionDemanda() {
-  const [anio, setAnio] = useState(2025);
+  const [anio, setAnio] = useState(2026);
   const [temporada, setTemporada] = useState("Semana Santa");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
@@ -97,8 +97,10 @@ export default function PrediccionDemanda() {
           <div className="text-sm">Año</div>
           <input
             type="number"
+            min={2026}
             value={anio}
-            onChange={(e)=>setAnio(e.target.value)}
+            //onChange={(e) => setAnio(Math.max(2026, Number(e.target.value)))}
+            readOnly
             className="w-32 p-2 rounded border"
           />
         </label>
