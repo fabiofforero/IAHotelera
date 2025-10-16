@@ -325,9 +325,7 @@ def predict(req: PredictIn):
         return {"segmento": segmento, "probabilidades": proba_map, "debug": meta}
     except Exception as e:
         raise HTTPException(500, detail=f"Error al predecir: {e}")
-    
-# en adelante segundo modelo 
-# --- debajo de tus rutas BASE_DIR/DATA_DIR ---
+# en adelante segundo modelo
 DEMAND_MODEL_PATH = DATA_DIR / "modelo_knn_temporadas_personas.joblib"
 
 try:
@@ -335,6 +333,7 @@ try:
 except Exception as e:
     demand_model = None
     print(f"[WARN] No pude cargar el modelo de demanda en {DEMAND_MODEL_PATH}: {e}")
+
 from typing import List
 from pydantic import BaseModel, Field
 
@@ -353,10 +352,11 @@ class DemandItem(BaseModel):
 class DemandBatch(BaseModel):
     items: List[DemandItem]
 
-
 def _norm_temporada(s: str) -> str:
     s = str(s).strip()
     return "Puente festivo" if s.lower().startswith("puente festivo") else s
+
+
 @app.post("/predict_demand")
 def predict_demand(batch: DemandBatch):
     if demand_model is None:
@@ -400,4 +400,3 @@ def predict_demand(batch: DemandBatch):
         "totals": totals,
         "detail": det
     }
-
